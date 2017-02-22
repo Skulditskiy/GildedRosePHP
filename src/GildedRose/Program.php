@@ -130,11 +130,16 @@ class Program
                 break;
             default:
                 $item->sellIn--;
-                if ($item->quality > 0) {
-                    $item->quality--;
+                $qualityDegrease = 1;
+                if ($item->sellIn < 0) {
+                    $qualityDegrease = 2;
                 }
-                if ($item->sellIn < 0 && $item->quality > 0) {
-                    $item->quality--;
+                if (isset($item->conjured) && $item->conjured === true) {
+                    $qualityDegrease *= 2;
+                }
+                $item->quality -= $qualityDegrease;
+                if ($item->quality < 0) {
+                    $item->quality = 0;
                 }
                 break;
         }
