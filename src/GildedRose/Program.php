@@ -51,7 +51,7 @@ class Program
 
     public static function Main()
     {
-        echo "HELLO\n";
+        echo "HELLO" . PHP_EOL;
 
         $app = new Program(array(
               new Item(array( 'name' => "+5 Dexterity Vest",'sellIn' => 10,'quality' => 20)),
@@ -68,9 +68,9 @@ class Program
 
         $app->UpdateAllQuality($app->items);
 
-        echo sprintf("%50s - %7s - %7s\n", "Name", "SellIn", "Quality");
+        echo sprintf("%50s - %7s - %7s" . PHP_EOL, "Name", "SellIn", "Quality");
         foreach ($app->items as $item) {
-            echo sprintf("%50s - %7d - %7d\n", $item->name, $item->sellIn, $item->quality);
+            echo sprintf("%50s - %7d - %7d" . PHP_EOL, $item->name, $item->sellIn, $item->quality);
         }
     }
 
@@ -84,7 +84,8 @@ class Program
     }
 
     /**
-     *
+     * @param array $items
+     * @return array
      */
     public function UpdateAllQuality(array $items)
     {
@@ -100,27 +101,19 @@ class Program
      */
     public function UpdateQuality(Item $item)
     {
-        if ($item->name != "Aged Brie" && $item->name != "Backstage passes to a TAFKAL80ETC concert") {
-            if ($item->quality > 0) {
-                if ($item->name != "Sulfuras, Hand of Ragnaros") {
-                    $item->quality = $item->quality - 1;
-                }
-            }
+        if ($item->name != "Aged Brie" && $item->name != "Backstage passes to a TAFKAL80ETC concert" && $item->name != "Sulfuras, Hand of Ragnaros" && $item->quality > 0) {
+            $item->quality = $item->quality - 1;
         } else {
             if ($item->quality < 50) {
                 $item->quality = $item->quality + 1;
 
                 if ($item->name == "Backstage passes to a TAFKAL80ETC concert") {
-                    if ($item->sellIn < 11) {
-                        if ($item->quality < 50) {
-                            $item->quality = $item->quality + 1;
-                        }
+                    if ($item->sellIn < 11 && $item->quality < 50) {
+                        $item->quality = $item->quality + 1;
                     }
 
-                    if ($item->sellIn < 6) {
-                        if ($item->quality < 50) {
-                            $item->quality = $item->quality + 1;
-                        }
+                    if ($item->sellIn < 6 && $item->quality < 50) {
+                        $item->quality = $item->quality + 1;
                     }
                 }
             }
@@ -133,10 +126,8 @@ class Program
         if ($item->sellIn < 0) {
             if ($item->name != "Aged Brie") {
                 if ($item->name != "Backstage passes to a TAFKAL80ETC concert") {
-                    if ($item->quality > 0) {
-                        if ($item->name != "Sulfuras, Hand of Ragnaros") {
-                            $item->quality = $item->quality - 1;
-                        }
+                    if ($item->quality > 0 && $item->name != "Sulfuras, Hand of Ragnaros") {
+                        $item->quality = $item->quality - 1;
                     }
                 } else {
                     $item->quality = $item->quality - $item->quality;
