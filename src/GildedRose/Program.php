@@ -47,29 +47,22 @@ namespace GildedRose;
  */
 class Program
 {
-    private $items = array();
+    /**
+     * @var array
+     */
+    private $items = [];
 
-    public static function Main()
+    /**
+     *
+     */
+    public function main()
     {
         echo "HELLO" . PHP_EOL;
 
-        $app = new Program(array(
-              new Item(array( 'name' => "+5 Dexterity Vest",'sellIn' => 10,'quality' => 20)),
-              new Item(array( 'name' => "Aged Brie",'sellIn' => 2,'quality' => 0)),
-              new Item(array( 'name' => "Elixir of the Mongoose",'sellIn' => 5,'quality' => 7)),
-              new Item(array( 'name' => "Sulfuras, Hand of Ragnaros",'sellIn' => 0,'quality' => 80)),
-              new Item(array(
-                     'name' => "Backstage passes to a TAFKAL80ETC concert",
-                     'sellIn' => 15,
-                     'quality' => 20
-              )),
-              new Item(array('name' => "Conjured Mana Cake",'sellIn' => 3,'quality' => 6)),
-        ));
-
-        $app->UpdateAllQuality($app->items);
+        $this->items = $this->updateAllQuality($this->items);
 
         echo sprintf("%50s - %7s - %7s" . PHP_EOL, "Name", "SellIn", "Quality");
-        foreach ($app->items as $item) {
+        foreach ($this->items as $item) {
             echo sprintf("%50s - %7d - %7d" . PHP_EOL, $item->name, $item->sellIn, $item->quality);
         }
     }
@@ -87,10 +80,10 @@ class Program
      * @param array $items
      * @return array
      */
-    public function UpdateAllQuality(array $items)
+    public function updateAllQuality(array $items)
     {
         foreach ($items as $key => $item) {
-            $items[$key] = $this->UpdateQuality($item);
+            $items[$key] = $this->updateQuality($item);
         }
         return $items;
     }
@@ -99,7 +92,7 @@ class Program
      * @param $item
      * @return mixed
      */
-    public function UpdateQuality(Item $item)
+    public function updateQuality(Item $item)
     {
         switch ($item->name) {
             case 'Aged Brie':
@@ -113,8 +106,9 @@ class Program
                 break;
             case 'Backstage passes to a TAFKAL80ETC concert':
                 $item->sellIn--;
+                $item->quality++;
                 if ($item->sellIn <= 10) {
-                    $item->quality += 2;
+                    $item->quality++;
                 }
                 if ($item->sellIn <= 5) {
                     $item->quality++;
